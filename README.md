@@ -1,16 +1,13 @@
 # mass
 
-A new Flutter project.
+Project M.A.S.S.:
 
-## Getting Started
+- Multiplatform Application for Social Services
 
-This project is a starting point for a Flutter application.
+- developed with the Flutter
 
-A few resources to get you started if this is your first Flutter project:
+- for my and school stuff
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Some summary of how app will work: 
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+You open the app, it will give you a choice of several types of forms (XML) and then in the next XML I will feed the data and then you will evaluate with different graphs according to 1. XML
