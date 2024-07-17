@@ -1,0 +1,72 @@
+<form>
+    <title>Personal Information Survey</title>
+    <question>
+        <id>1</id>
+        <text>What is your full name?</text>
+        <type>text</type>
+    </question>
+    <question>
+        <id>2</id>
+        <text>What is your date of birth?</text>
+        <type>date</type>
+    </question>
+    <question>
+        <id>3</id>
+        <text>What is your gender?</text>
+        <type>radio</type>
+        <options>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+        </options>
+    </question>
+    <question>
+        <id>4</id>
+        <text>What is your email address?</text>
+        <type>email</type>
+    </question>
+    <question>
+        <id>5</id>
+        <text>What is your phone number?</text>
+        <type>tel</type>
+    </question>
+    <question>
+        <id>6</id>
+        <text>What is your highest level of education?</text>
+        <type>select</type>
+        <options>
+            <option>High School</option>
+            <option>Bachelor's Degree</option>
+            <option>Master's Degree</option>
+            <option>Doctorate</option>
+            <option>Other</option>
+        </options>
+    </question>
+    <question>
+        <id>7</id>
+        <text>What are your hobbies?</text>
+        <type>checkbox</type>
+        <options>
+            <option>Reading</option>
+            <option>Traveling</option>
+            <option>Cooking</option>
+            <option>Sports</option>
+            <option>Music</option>
+        </options>
+    </question>
+    <question>
+        <id>8</id>
+        <text>How many languages do you speak?</text>
+        <type>number</type>
+    </question>
+    <question>
+        <id>9</id>
+        <text>Please provide your address</text>
+        <type>textarea</type>
+    </question>
+    <question>
+        <id>10</id>
+        <text>Do you have any dietary restrictions?</text>
+        <type>text</type>
+    </question>
+</form>

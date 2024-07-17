@@ -1,0 +1,76 @@
+<form>
+    <title>Employee Feedback Form</title>
+    <question>
+        <id>1</id>
+        <text>How satisfied are you with your current job role?</text>
+        <type>rating</type>
+        <scale>1-5</scale>
+    </question>
+    <question>
+        <id>2</id>
+        <text>How often do you receive constructive feedback from your manager?</text>
+        <type>select</type>
+        <options>
+            <option>Daily</option>
+            <option>Weekly</option>
+            <option>Monthly</option>
+            <option>Rarely</option>
+            <option>Never</option>
+        </options>
+    </question>
+    <question>
+        <id>3</id>
+        <text>Do you feel valued at work?</text>
+        <type>radio</type>
+        <options>
+            <option>Yes</option>
+            <option>No</option>
+        </options>
+    </question>
+    <question>
+        <id>4</id>
+        <text>What do you like most about your job?</text>
+        <type>textarea</type>
+    </question>
+    <question>
+        <id>5</id>
+        <text>What do you like least about your job?</text>
+        <type>textarea</type>
+    </question>
+    <question>
+        <id>6</id>
+        <text>How likely are you to recommend our company to a friend?</text>
+        <type>rating</type>
+        <scale>1-10</scale>
+    </question>
+    <question>
+        <id>7</id>
+        <text>What can we improve in the workplace?</text>
+        <type>textarea</type>
+    </question>
+    <question>
+        <id>8</id>
+        <text>Do you have the resources you need to perform your job well?</text>
+        <type>radio</type>
+        <options>
+            <option>Yes</option>
+            <option>No</option>
+        </options>
+    </question>
+    <question>
+        <id>9</id>
+        <text>How would you rate the work-life balance at our company?</text>
+        <type>select</type>
+        <options>
+            <option>Excellent</option>
+            <option>Good</option>
+            <option>Fair</option>
+            <option>Poor</option>
+        </options>
+    </question>
+    <question>
+        <id>10</id>
+        <text>Any other comments or suggestions?</text>
+        <type>textarea</type>
+    </question>
+</form>
