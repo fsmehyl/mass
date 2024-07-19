@@ -67,6 +67,7 @@ flutter:
     - assets/xml_forms/form_one.xml
     - assets/xml_forms/form_two.xml
     - assets/xml_forms/form_three.xml
+    - assets/Flutter_logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
