@@ -47,7 +47,6 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       body: Container(
-        
         child: Center(
           child: SingleChildScrollView(
             child: Column(
