@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use, prefer_const_constructors
+// ignore_for_file: deprecated_member_use, prefer_const_constructors, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -161,25 +161,41 @@ class _FormBuilderState extends State<FormBuilder> {
   }
 
   Widget _buildCheckboxField(Map<String, dynamic> question) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(question['text'],
-            style: const TextStyle(fontWeight: FontWeight.bold)),
-        Column(
-          children: question['options'].map<Widget>((option) {
-            return Row(
-              children: [
-                Checkbox(value: false, onChanged: (bool? value) {}),
-                Text(option),
-              ],
-            );
-          }).toList(),
-        ),
-        const SizedBox(height: 16),
-      ],
-    );
-  }
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        question['text'],
+        style: const TextStyle(fontWeight: FontWeight.bold),
+      ),
+      Column(
+        children: question['options'].map<Widget>((option) {
+          bool isChecked = false;
+
+          return StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return Row(
+                children: [
+                  Checkbox(
+                    value: isChecked,
+                    onChanged: (value) {
+                      setState(() {
+                        isChecked = value!;
+                      });
+                    },
+                  ),
+                  Text(option),
+                ],
+              );
+            },
+          );
+        }).toList(),
+      ),
+      const SizedBox(height: 16),
+    ],
+  );
+}
+
 
   Widget _buildSelectField(Map<String, dynamic> question) {
     return Column(

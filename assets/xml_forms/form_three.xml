@@ -1,5 +1,4 @@
 <form>
-    <title>Product Feedback Form</title>
     <question>
         <id>1</id>
         <text>How would you rate the quality of our product?</text>

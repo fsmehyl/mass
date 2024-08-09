@@ -1,5 +1,4 @@
 <form>
-    <title>Employee Feedback Form</title>
     <question>
         <id>1</id>
         <text>How satisfied are you with your current job role?</text>

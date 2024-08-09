@@ -1,7 +1,7 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'fill_form_one.dart';
+import 'fill_form_two.dart';
+import 'fill_form_three.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -27,6 +27,7 @@ class _MyHomePageState extends State<MyHomePage> {
       'Násilie páchané na deťoch v domácnostiach',
       'Rôzne prípady detí DO 10 rokov',
       'Rôzne prípady detí DO 5 rokov',
+      'Deti, ktoré pricestovali zo zahraničia',
       'viac formulárov čoskoro...',
     ];
 
@@ -77,20 +78,20 @@ class _MyHomePageState extends State<MyHomePage> {
                               );
                               break;
                             case 'Násilie páchané na deťoch v domácnostiach':
-                              /*Navigator.push(
+                              Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => FillFormTwo(),
                                 ),
-                              );*/
+                              );
                               break;
-                            case 'Rôzne prípady detí DO 5 rokov':
-                              /*Navigator.push(
+                            case 'Rôzne prípady detí DO 10 rokov':
+                              Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => FillFormThree(),
                                 ),
-                              );*/
+                              );
                               break;
                             default:
 

@@ -1,5 +1,4 @@
 <form>
-    <title>Personal Information Survey</title>
     <question>
         <id>1</id>
         <text>What is your full name?</text>
