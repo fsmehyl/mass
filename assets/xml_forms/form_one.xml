@@ -8,12 +8,12 @@
     <question>
         <id>2</id>
         <text>What is your date of birth?</text>
-        <type>date</type>
+        <type>text</type>
     </question>
     <question>
         <id>3</id>
         <text>What is your gender?</text>
-        <type>radio</type>
+        <type>select</type>
         <options>
             <option>Male</option>
             <option>Female</option>
@@ -23,12 +23,12 @@
     <question>
         <id>4</id>
         <text>What is your email address?</text>
-        <type>email</type>
+        <type>textarea</type>
     </question>
     <question>
         <id>5</id>
         <text>What is your phone number?</text>
-        <type>tel</type>
+        <type>text</type>
     </question>
     <question>
         <id>6</id>
