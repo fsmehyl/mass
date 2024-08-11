@@ -2,7 +2,7 @@
     <question>
         <id>1</id>
         <text>How satisfied are you with your current job role?</text>
-        <type>rating</type>
+        <type>textarea</type>
         <scale>1-5</scale>
     </question>
     <question>

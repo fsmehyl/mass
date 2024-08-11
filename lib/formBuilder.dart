@@ -1,8 +1,9 @@
-// ignore_for_file: deprecated_member_use, prefer_const_constructors, use_key_in_widget_constructors
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:xml/xml.dart' as xml;
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+import 'home_page.dart'; // Import MyHomePage
 
 class FormBuilder extends StatefulWidget {
   final String xmlFilePath;
@@ -16,6 +17,7 @@ class FormBuilder extends StatefulWidget {
 
 class _FormBuilderState extends State<FormBuilder> {
   List<Map<String, dynamic>> questions = [];
+  Map<String, dynamic> answers = {};
 
   @override
   void initState() {
@@ -54,11 +56,68 @@ class _FormBuilderState extends State<FormBuilder> {
     setState(() {});
   }
 
+  Future<void> _saveForm() async {
+    final builder = xml.XmlBuilder();
+    builder.processing('xml', 'version="1.0" encoding="UTF-8"');
+    builder.element('form', nest: () {
+      for (var question in questions) {
+        builder.element('question', nest: () {
+          builder.element('id', nest: question['id']);
+          builder.element('answer', nest: answers[question['id']] ?? '');
+        });
+      }
+    });
+
+    final document = builder.buildDocument();
+
+    // Získanie verejného priečinka pre súbory
+    final directory = await getExternalStorageDirectory();
+    final filePath = '${directory!.path}/answers.xml';
+    final file = File(filePath);
+
+    // Zápis súboru
+    await file.writeAsString(document.toXmlString(pretty: true));
+
+    print('Súbor uložený na: $filePath');
+
+    // Načítanie a zobrazenie obsahu súboru
+    final savedData = await file.readAsString();
+    _showFileContent(savedData);
+  }
+
+  void _showFileContent(String content) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Obsah súboru'),
+          content: SingleChildScrollView(
+            child: Text(content),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                    builder: (context) => MyHomePage(title: 'Moje Domovská Stránka'),
+                  ),
+                  (route) => false, // Odstráni všetky predchádzajúce stránky
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.formTitle, style: const TextStyle(color: Colors.purple)),
+        title: Text(widget.formTitle,
+            style: const TextStyle(color: Colors.purple)),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -92,9 +151,7 @@ class _FormBuilderState extends State<FormBuilder> {
                 children: [
                   SizedBox(
                     child: ElevatedButton.icon(
-                      onPressed: () {
-                        // Add form submission or data collection logic here
-                      },
+                      onPressed: _saveForm, // Save form data to XML
                       icon: const Icon(Icons.send),
                       label: Column(
                         children: const [
@@ -126,6 +183,9 @@ class _FormBuilderState extends State<FormBuilder> {
         Text(question['text'],
             style: const TextStyle(fontWeight: FontWeight.bold)),
         TextField(
+          onChanged: (value) {
+            answers[question['id']] = value;
+          },
           decoration: const InputDecoration(
             border: OutlineInputBorder(),
           ),
@@ -149,7 +209,14 @@ class _FormBuilderState extends State<FormBuilder> {
           children: question['options'].map<Widget>((option) {
             return Row(
               children: [
-                Radio(value: option, groupValue: null, onChanged: (value) {}),
+                Radio(
+                    value: option,
+                    groupValue: answers[question['id']],
+                    onChanged: (value) {
+                      setState(() {
+                        answers[question['id']] = value;
+                      });
+                    }),
                 Text(option),
               ],
             );
@@ -161,41 +228,39 @@ class _FormBuilderState extends State<FormBuilder> {
   }
 
   Widget _buildCheckboxField(Map<String, dynamic> question) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-        question['text'],
-        style: const TextStyle(fontWeight: FontWeight.bold),
-      ),
-      Column(
-        children: question['options'].map<Widget>((option) {
-          bool isChecked = false;
-
-          return StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
-              return Row(
-                children: [
-                  Checkbox(
-                    value: isChecked,
-                    onChanged: (value) {
-                      setState(() {
-                        isChecked = value!;
-                      });
-                    },
-                  ),
-                  Text(option),
-                ],
-              );
-            },
-          );
-        }).toList(),
-      ),
-      const SizedBox(height: 16),
-    ],
-  );
-}
-
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          question['text'],
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        Column(
+          children: question['options'].map<Widget>((option) {
+            return Row(
+              children: [
+                Checkbox(
+                  value: answers[question['id']]?.contains(option) ?? false,
+                  onChanged: (value) {
+                    setState(() {
+                      if (value == true) {
+                        answers[question['id']] =
+                            (answers[question['id']] ?? [])..add(option);
+                      } else {
+                        answers[question['id']]?.remove(option);
+                      }
+                    });
+                  },
+                ),
+                Text(option),
+              ],
+            );
+          }).toList(),
+        ),
+        const SizedBox(height: 16),
+      ],
+    );
+  }
 
   Widget _buildSelectField(Map<String, dynamic> question) {
     return Column(
@@ -211,7 +276,11 @@ class _FormBuilderState extends State<FormBuilder> {
               child: Text(value),
             );
           }).toList(),
-          onChanged: (String? newValue) {},
+          onChanged: (String? newValue) {
+            setState(() {
+              answers[question['id']] = newValue;
+            });
+          },
           decoration: const InputDecoration(
             border: OutlineInputBorder(),
           ),
@@ -233,6 +302,9 @@ class _FormBuilderState extends State<FormBuilder> {
             style: const TextStyle(fontWeight: FontWeight.bold)),
         TextField(
           maxLines: 4,
+          onChanged: (value) {
+            answers[question['id']] = value;
+          },
           decoration: const InputDecoration(
             border: OutlineInputBorder(),
           ),
