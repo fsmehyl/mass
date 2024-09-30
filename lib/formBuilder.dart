@@ -1,9 +1,9 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:xml/xml.dart' as xml;
-import 'dart:io';
 import 'package:path_provider/path_provider.dart';
-import 'home_page.dart'; // Import MyHomePage
+import 'package:xml/xml.dart' as xml;
+import 'home_page.dart';
 
 class FormBuilder extends StatefulWidget {
   final String xmlFilePath;
@@ -70,19 +70,32 @@ class _FormBuilderState extends State<FormBuilder> {
 
     final document = builder.buildDocument();
 
-    // Získanie verejného priečinka pre súbory
-    final directory = await getExternalStorageDirectory();
-    final filePath = '${directory!.path}/answers.xml';
-    final file = File(filePath);
+    Directory? directory;
+    if (Platform.isAndroid) {
+      directory = await getExternalStorageDirectory();
+    } else if (Platform.isIOS || Platform.isMacOS) {
+      directory = await getApplicationDocumentsDirectory();
+    } else if (Platform.isWindows || Platform.isLinux) {
+      directory = await getApplicationSupportDirectory();
+    } else {
+      directory = null;
+    }
 
-    // Zápis súboru
-    await file.writeAsString(document.toXmlString(pretty: true));
+    if (directory != null) {
+      final filePath = '${directory.path}/form_data.xml';
+      final file = File(filePath);
 
-    print('Súbor uložený na: $filePath');
+      // Zápis súboru
+      await file.writeAsString(document.toXmlString(pretty: true));
 
-    // Načítanie a zobrazenie obsahu súboru
-    final savedData = await file.readAsString();
-    _showFileContent(savedData);
+      print('Súbor uložený na: $filePath');
+
+      // Načítanie a zobrazenie obsahu súboru
+      final savedData = await file.readAsString();
+      _showFileContent(savedData);
+    } else {
+      print('Nepodarilo sa získať adresár pre uloženie súboru.');
+    }
   }
 
   void _showFileContent(String content) {
@@ -100,7 +113,7 @@ class _FormBuilderState extends State<FormBuilder> {
               onPressed: () {
                 Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(
-                    builder: (context) => MyHomePage(title: 'Moje Domovská Stránka'),
+                    builder: (context) => MyHomePage(title: 'M.A.S.S.'),
                   ),
                   (route) => false, // Odstráni všetky predchádzajúce stránky
                 );
