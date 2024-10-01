@@ -27,8 +27,9 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Color.fromARGB(255, 4, 137, 166),
         appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 7, 200, 243),
+          backgroundColor: Color.fromARGB(255, 155, 219, 233),
           title: Text(
             widget.title,
             style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
@@ -38,57 +39,74 @@ class _MyHomePageState extends State<MyHomePage> {
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                SizedBox(
-                  height: 20,
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.only(top: 30),
+                  color: Color.fromARGB(255, 0, 74, 176),
+                  child: Center(
+                    child: Text(
+                      'Vyberte formulár na vyplnenie:',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 255, 255, 255),
+                      ),
+                    ),
+                  ),
                 ),
-                Text(
-                  'Vyberte formulár na vyplnenie:',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                Container(
+                  width: double.infinity,
+                  height: 30,
+                  decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [const Color.fromARGB(255, 0, 74, 176), Colors.red], // Dve farby pre prechod
+              begin: Alignment.topCenter, // Začiatok prechodu
+              end: Alignment.bottomCenter, // Koniec prechodu
+            ),
                   ),
                 ),
                 SizedBox(
                   height: 20,
                 ),
                 for (var fileNames in loadFiles)
-                  Container(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          width: 500,
-                          child: ElevatedButton.icon(
-                            onPressed: () {
-                              switch (fileNames) {
-                                case 'Deti vychovávané v detskom domove':
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => FillFormOne(),
-                                    ),
-                                  );
-                                  break;
-                                case 'Násilie páchané na deťoch v domácnostiach':
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => FillFormTwo(),
-                                    ),
-                                  );
-                                  break;
-                                case 'Rôzne prípady detí DO 10 rokov':
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => FillFormThree(),
-                                    ),
-                                  );
-                                  break;
-                                default:
-                                  showDialog(context: context,
-                                   builder: (context) => AlertDialog(
+                  Column(
+                    children: [
+                      SizedBox(
+                        width: 500,
+                        child: ElevatedButton.icon(
+                          onPressed: () {
+                            switch (fileNames) {
+                              case 'Deti vychovávané v detskom domove':
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => FillFormOne(),
+                                  ),
+                                );
+                                break;
+                              case 'Násilie páchané na deťoch v domácnostiach':
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => FillFormTwo(),
+                                  ),
+                                );
+                                break;
+                              case 'Rôzne prípady detí DO 10 rokov':
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => FillFormThree(),
+                                  ),
+                                );
+                                break;
+                              default:
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
                                     title: Text('Upozornenie'),
-                                    content: Text('Tento formulár zatiaľ ešte nie je dorobený, o jeho vytvorení vás budeme kontaktovať mailom, prosím zatiaľ používajte iné formuláre, ďakujeme'),
+                                    content: Text(
+                                        'Tento formulár zatiaľ ešte nie je dorobený, o jeho vytvorení vás budeme kontaktovať mailom, prosím zatiaľ používajte iné formuláre, ďakujeme'),
                                     actions: [
                                       TextButton(
                                         onPressed: () {
@@ -97,36 +115,35 @@ class _MyHomePageState extends State<MyHomePage> {
                                         child: Text('OK'),
                                       ),
                                     ],
-                                   ),
-                                  );
-                              }
-                            },
-                            icon: Icon(Icons.file_open_outlined),
-                            label: Column(
-                              children: [
-                                Text(
-                                  fileNames,
-                                  style: const TextStyle(
-                                    fontSize: 14,
                                   ),
+                                );
+                            }
+                          },
+                          icon: Icon(Icons.file_open_outlined),
+                          label: Column(
+                            children: [
+                              Text(
+                                fileNames,
+                                style: const TextStyle(
+                                  fontSize: 14,
                                 ),
-                                const SizedBox(height: 5),
-                                const Text(
-                                  'Kliknite pre pokračovanie...',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontStyle: FontStyle.italic,
-                                  ),
+                              ),
+                              const SizedBox(height: 5),
+                              const Text(
+                                'Kliknite pre pokračovanie...',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontStyle: FontStyle.italic,
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                      ],
-                    ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                    ],
                   ),
                 SizedBox(
                   height: 20,
@@ -135,7 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(5)),
                       border: Border.all(
-                        color: Color.fromARGB(255, 7, 200, 243),
+                        color: Color.fromARGB(255, 155, 219, 233),
                       )),
                   child: Column(
                     children: [
@@ -152,6 +169,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         style: TextStyle(
                           fontSize: 16,
                           fontStyle: FontStyle.italic,
+                          color: Color.fromARGB(255, 255, 255, 255),
                         ),
                       ),
                     ],
@@ -160,10 +178,35 @@ class _MyHomePageState extends State<MyHomePage> {
                 SizedBox(
                   height: 20,
                 ),
+                Container(
+                  width: double.infinity,
+                  height: 15,
+                  decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [ Colors.red, const Color.fromARGB(255, 4, 137, 166)], // Dve farby pre prechod
+              begin: Alignment.topCenter, // Začiatok prechodu
+              end: Alignment.bottomCenter, // Koniec prechodu
+            ),
+                  ),
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 20,
+                  color: Color.fromARGB(255, 4, 137, 166),
+                  child: Center(
+                    child: Text(
+                        'developer: Filip Šmehyl',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.normal,
+                          color: Color.fromARGB(255, 255, 255, 255),
+                        ),
+                      ),
+                  ),
+                ),
               ],
             ),
           ),
-        )
-    );
+        ));
   }
 }
