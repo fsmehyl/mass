@@ -3,7 +3,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'formBuilder.dart';
+import 'formBuilderPackage.dart';
 
 class FillFormOne extends StatefulWidget {
   const FillFormOne({super.key});
@@ -17,7 +17,7 @@ class FillFormOne extends StatefulWidget {
 class _FillFormOneState extends State<FillFormOne> {
   @override
   Widget build(BuildContext context) {
-    return FormBuilder(
+    return FormBuilderPackage(
       xmlFilePath: 'assets/xml_forms/form_one.xml', // Uveďte cestu k vášmu XML súboru
       formTitle: 'DVVDD', // Nastavte názov formulára
     );

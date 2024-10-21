@@ -143,18 +143,14 @@ class _FormBuilderState extends State<FormBuilder> {
                   switch (question['type']) {
                     case 'text':
                       return _buildTextField(question);
-                    case 'date':
-                      return _buildDateField(question);
+                    case 'textarea':
+                      return _buildTextareaField(question);
                     case 'radio':
                       return _buildRadioField(question);
                     case 'checkbox':
                       return _buildCheckboxField(question);
                     case 'select':
                       return _buildSelectField(question);
-                    case 'number':
-                      return _buildNumberField(question);
-                    case 'textarea':
-                      return _buildTextareaField(question);
                     default:
                       return const SizedBox.shrink();
                   }
@@ -189,6 +185,8 @@ class _FormBuilderState extends State<FormBuilder> {
     );
   }
 
+  ///////////////////////////////////////////////////////////////////////////////////
+
   Widget _buildTextField(Map<String, dynamic> question) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -196,6 +194,7 @@ class _FormBuilderState extends State<FormBuilder> {
         Text(question['text'],
             style: const TextStyle(fontWeight: FontWeight.bold)),
         TextField(
+          maxLines: 1,
           onChanged: (value) {
             answers[question['id']] = value;
           },
@@ -208,9 +207,28 @@ class _FormBuilderState extends State<FormBuilder> {
     );
   }
 
-  Widget _buildDateField(Map<String, dynamic> question) {
-    return _buildTextField(question);
+  Widget _buildTextareaField(Map<String, dynamic> question) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(question['text'],
+            style: const TextStyle(fontWeight: FontWeight.bold)),
+        TextField(
+          maxLines:
+              4, // Tento WIDGET má akurát väčšie textové pole za pomoci tohto príkazu
+          onChanged: (value) {
+            answers[question['id']] = value;
+          },
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 16),
+      ],
+    );
   }
+
+  ///////////////////////////////////////////////////////////////////////////////////
 
   Widget _buildRadioField(Map<String, dynamic> question) {
     return Column(
@@ -218,7 +236,7 @@ class _FormBuilderState extends State<FormBuilder> {
       children: [
         Text(question['text'],
             style: const TextStyle(fontWeight: FontWeight.bold)),
-        Column(
+        Row(
           children: question['options'].map<Widget>((option) {
             return Row(
               children: [
@@ -239,6 +257,8 @@ class _FormBuilderState extends State<FormBuilder> {
       ],
     );
   }
+
+  ///////////////////////////////////////////////////////////////////////////////////
 
   Widget _buildCheckboxField(Map<String, dynamic> question) {
     return Column(
@@ -275,6 +295,8 @@ class _FormBuilderState extends State<FormBuilder> {
     );
   }
 
+  ///////////////////////////////////////////////////////////////////////////////////
+
   Widget _buildSelectField(Map<String, dynamic> question) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -293,30 +315,6 @@ class _FormBuilderState extends State<FormBuilder> {
             setState(() {
               answers[question['id']] = newValue;
             });
-          },
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(),
-          ),
-        ),
-        const SizedBox(height: 16),
-      ],
-    );
-  }
-
-  Widget _buildNumberField(Map<String, dynamic> question) {
-    return _buildTextField(question);
-  }
-
-  Widget _buildTextareaField(Map<String, dynamic> question) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(question['text'],
-            style: const TextStyle(fontWeight: FontWeight.bold)),
-        TextField(
-          maxLines: 4,
-          onChanged: (value) {
-            answers[question['id']] = value;
           },
           decoration: const InputDecoration(
             border: OutlineInputBorder(),

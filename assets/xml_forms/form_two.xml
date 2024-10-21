@@ -1,9 +1,15 @@
 <form>
     <question>
         <id>1</id>
-        <text>How satisfied are you with your current job role?</text>
-        <type>textarea</type>
-        <scale>1-5</scale>
+        <text>How satisfied are you with your current job role? (from the best 1 to the worst 5)</text>
+        <type>radio</type>
+        <options>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </options>
     </question>
     <question>
         <id>2</id>
@@ -29,12 +35,12 @@
     <question>
         <id>4</id>
         <text>What do you like most about your job?</text>
-        <type>textarea</type>
+        <type>text</type>
     </question>
     <question>
         <id>5</id>
         <text>What do you like least about your job?</text>
-        <type>textarea</type>
+        <type>text</type>
     </question>
     <question>
         <id>6</id>

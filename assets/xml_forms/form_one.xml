@@ -7,7 +7,7 @@
     <question>
         <id>2</id>
         <text>What is your date of birth?</text>
-        <type>text</type>
+        <type>date</type>
     </question>
     <question>
         <id>3</id>
@@ -67,5 +67,11 @@
         <id>10</id>
         <text>Do you have any dietary restrictions?</text>
         <type>text</type>
+    </question>
+    <question>
+        <id>11</id>
+        <text>How much are you satisfied with this form?</text>
+        <text>1 - the best, 5 - the worst</text>
+        <type>slider</type>
     </question>
 </form>
