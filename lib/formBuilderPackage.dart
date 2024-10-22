@@ -1,15 +1,15 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:mass/formBuilder.dart' as custom_form_builder;
 import 'package:path_provider/path_provider.dart';
 import 'package:xml/xml.dart' as xml;
-import 'home_page.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'home_page.dart';
 
 class FormBuilderPackage extends StatefulWidget {
   final String xmlFilePath;
   final String formTitle;
+  
 
   const FormBuilderPackage({
     super.key,
@@ -71,99 +71,233 @@ class _FormBuilderPackageState extends State<FormBuilderPackage> {
     return questions.map((question) {
       switch (question['type']) {
         case 'text':
-          return FormBuilderTextField(
-            name: question['id'],
-            decoration: InputDecoration(labelText: question['text']),
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: FormBuilderTextField(
+              cursorColor: const Color.fromARGB(255, 18, 125, 240),
+              name: question['id'],
+              decoration: InputDecoration(
+                  labelText: question['text'],
+                  hoverColor: const Color.fromARGB(255, 18, 125, 240),
+                  border: const OutlineInputBorder(),
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 10.0),
+                  iconColor: Colors.blue),
+            ),
           );
         case 'radio':
-          return FormBuilderSwitch(
-            name: question['id'],
-            title: Text(question['text']),
-            activeColor: Color.fromARGB(255, 18, 125, 240),
-            initialValue: false,
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: FormBuilderChoiceChip<String>(
+              name: question['id'],
+              decoration: InputDecoration(labelText: question['text']),
+              options: question['options']
+                  .map<FormBuilderChipOption<String>>(
+                    (String option) => FormBuilderChipOption(
+                      value: option,
+                      child: Text(option),
+                    ),
+                  )
+                  .toList(),
+              selectedColor: const Color.fromARGB(255, 18, 125, 240),
+            ),
           );
         case 'checkbox':
-          return FormBuilderCheckboxGroup(
-            name: question['id'],
-            decoration: InputDecoration(labelText: question['text']),
-            checkColor: Color.fromARGB(255, 255, 255, 255),
-            activeColor: Color.fromARGB(255, 18, 125, 240),
-            options: question['options']
-                .map<FormBuilderFieldOption<String>>(
-                    (String option) => FormBuilderFieldOption(value: option))
-                .toList(),
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: FormBuilderFilterChip(
+              name: question['id'],
+              decoration: InputDecoration(labelText: question['text']),
+              options: question['options']
+                  .map<FormBuilderChipOption<String>>(
+                    (String option) => FormBuilderChipOption(
+                      value: option,
+                      child: Text(option),
+                    ),
+                  )
+                  .toList(),
+              selectedColor: const Color.fromARGB(255, 18, 125, 240),
+              checkmarkColor: const Color.fromARGB(255, 0, 0, 0),
+            ),
           );
         case 'select':
-          return FormBuilderDropdown<String>(
-            name: question['id'],
-            decoration: InputDecoration(
-              labelText: question['text'],
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: FormBuilderDropdown<String>(
+              name: question['id'],
+              decoration: InputDecoration(
+                labelText: question['text'],
+                border: const OutlineInputBorder(),
+              ),
+              items: question['options']
+                  .map<DropdownMenuItem<String>>((String option) =>
+                      DropdownMenuItem<String>(
+                          value: option, child: Text(option)))
+                  .toList(),
             ),
-            dropdownColor: Color.fromARGB(255, 230, 230, 230),
-            focusColor: Color.fromARGB(60, 18, 125, 240),
-            iconEnabledColor: Color.fromARGB(255, 18, 125, 240),
-            iconDisabledColor: Color.fromARGB(255, 18, 125, 240),
-            items: question['options']
-                .map<DropdownMenuItem<String>>((String option) =>
-                    DropdownMenuItem<String>(
-                        value: option, child: Text(option)))
-                .toList(),
           );
         case 'slider':
-          return FormBuilderSlider(
-            name: question['id'],
-            decoration: InputDecoration(labelText: question['slider']),
-            min: 1.0,
-            max: 5.0,
-            initialValue: 3.0,
-            divisions: 4,
-            activeColor: Color.fromARGB(255, 18, 125, 240),
-            inactiveColor: Color.fromARGB(255, 192, 192, 192),
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: FormBuilderSlider(
+              name: question['id'],
+              decoration: InputDecoration(
+                labelText: question['text'],
+                labelStyle:
+                    const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              ),
+              min: 1.0,
+              max: 5.0,
+              initialValue: 3.0,
+              divisions: 4,
+              activeColor: const Color.fromARGB(255, 18, 125, 240),
+              inactiveColor: const Color.fromARGB(255, 192, 192, 192),
+            ),
           );
-          case 'date':
-          return FormBuilderDateTimePicker(
-            name: question['id'],
-            inputType: InputType.date,
-            decoration: InputDecoration(labelText: question['text']),
+        case 'date':
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: FormBuilderDateTimePicker(
+              name: question['id'],
+              inputType: InputType.date,
+              decoration: InputDecoration(
+                labelText: question['text'],
+                border: const OutlineInputBorder(),
+              ),
+            ),
           );
         default:
-          return SizedBox
+          return const SizedBox
               .shrink(); // Return an empty widget for unsupported types
       }
     }).toList();
+  }
+
+  Future<void> _saveForm() async {
+    final builder = xml.XmlBuilder();
+    builder.processing('xml', 'version="1.0" encoding="UTF-8"');
+    builder.element('form', nest: () {
+      for (var question in questions) {
+        builder.element('question', nest: () {
+          builder.element('id', nest: question['id']);
+          builder.element('answer', nest: answers[question['id']] ?? '');
+        });
+      }
+    });
+
+    final document = builder.buildDocument();
+
+    Directory? directory;
+    if (Platform.isAndroid) {
+      directory = await getExternalStorageDirectory();
+    } else if (Platform.isIOS || Platform.isMacOS) {
+      directory = await getApplicationDocumentsDirectory();
+    } else if (Platform.isWindows || Platform.isLinux) {
+      directory = await getApplicationSupportDirectory();
+    } else {
+      directory = null;
+    }
+
+    if (directory != null) {
+      final filePath = '${directory.path}/form_data.xml';
+      final file = File(filePath);
+
+      // Zápis súboru
+      await file.writeAsString(document.toXmlString(pretty: true));
+
+      print('Súbor uložený na: $filePath');
+
+      // Načítanie a zobrazenie obsahu súboru
+      final savedData = await file.readAsString();
+      _showFileContent(savedData);
+    } else {
+      print('Nepodarilo sa získať adresár pre uloženie súboru.');
+    }
+  }
+
+  void _showFileContent(String content) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Obsah súboru'),
+          content: SingleChildScrollView(
+            child: Text(content),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                    builder: (context) => const MyHomePage(title: 'M.A.S.S.'),
+                  ),
+                  (route) => false, // Odstráni všetky predchádzajúce stránky
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.formTitle),
+        backgroundColor: Colors.blue,
+        title: Text(widget.formTitle,
+            style: const TextStyle(
+                color: Color.fromARGB(255, 255, 255, 255),
+                fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.bold)),
       ),
       body: questions.isEmpty
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
-            child: Padding(
+              child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: FormBuilder(
                   key: _formKey,
                   child: Column(
                     children: [
                       ..._buildFormFields(),
-                      SizedBox(height: 20),
-                      ElevatedButton(
+                      const SizedBox(height: 20),
+                      ElevatedButton.icon(
                         onPressed: () {
-                          if (_formKey.currentState?.saveAndValidate() ?? false) {
-                            // Handle form submission logic here
-                            print(_formKey.currentState?.value);
+                          if (_formKey.currentState?.saveAndValidate() ??
+                              false) {
+                            setState(() {
+                              answers = _formKey.currentState?.value ?? {};
+                            });
+                            _saveForm();
+                          } else {
+                            print('Validation failed');
                           }
                         },
-                        child: Text('Submit'),
+                        icon: const Icon(
+                          Icons.send,
+                          color: Color.fromARGB(255, 18, 125, 240),
+                        ),
+                        label: const Column(
+                          children: [
+                            SizedBox(height: 5),
+                            Text(
+                              'Kliknite pre zber dát...',
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontStyle: FontStyle.italic,
+                                  color: Color.fromARGB(255, 18, 125, 240)),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 ),
               ),
-          ),
+            ),
     );
   }
 }
