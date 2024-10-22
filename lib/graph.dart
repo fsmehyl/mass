@@ -1,200 +1,75 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-
 class _BarChart extends StatelessWidget {
   const _BarChart();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
+    return Card(
+      color: Colors.blue,
+      child: Padding(
+        padding: const EdgeInsets.only(right: 18, top: 18, bottom: 18),
         child: BarChart(
           BarChartData(
-            barTouchData: barTouchData,
-            titlesData: titlesData,
-            borderData: borderData,
-            barGroups: barGroups,
-            gridData: const FlGridData(show: false),
-            alignment: BarChartAlignment.spaceAround,
-            maxY: 20,
+            backgroundColor: Colors.white,
+            titlesData: FlTitlesData(
+              rightTitles:
+                  AxisTitles(sideTitles: SideTitles(showTitles: false)),
+              topTitles: AxisTitles(
+                  sideTitles: SideTitles(showTitles: false, reservedSize: 40)),
+              leftTitles: AxisTitles(
+                sideTitles: SideTitles(
+                  interval: 5,
+                  reservedSize: 35,
+                  showTitles: true,
+                  getTitlesWidget: (value, meta) {
+                    return Text(
+                      value.toString(),
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 255, 255, 255),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                    );
+                  },
+                ),
+              ),
+              bottomTitles: AxisTitles(
+                sideTitles: SideTitles(
+                  showTitles: true,
+                  getTitlesWidget: (value, meta) {
+                    return Text(
+                      value.toString(),
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 255, 255, 255),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+            barGroups: [
+              BarChartGroupData(x: 0, barRods: [BarChartRodData(toY: 5)]),
+              BarChartGroupData(x: 1, barRods: [BarChartRodData(toY: 40)]),
+              BarChartGroupData(x: 2, barRods: [BarChartRodData(toY: 30)]),
+              BarChartGroupData(x: 3, barRods: [BarChartRodData(toY: 60)]),
+              BarChartGroupData(x: 4, barRods: [BarChartRodData(toY: 75)]),
+              BarChartGroupData(x: 5, barRods: [BarChartRodData(toY: 35)]),
+              BarChartGroupData(x: 6, barRods: [BarChartRodData(toY: 42)]),
+              BarChartGroupData(x: 7, barRods: [BarChartRodData(toY: 33)]),
+              BarChartGroupData(x: 8, barRods: [BarChartRodData(toY: 60)]),
+              BarChartGroupData(x: 9, barRods: [BarChartRodData(toY: 90)]),
+              BarChartGroupData(x: 10, barRods: [BarChartRodData(toY: 86)]),
+              BarChartGroupData(x: 11, barRods: [BarChartRodData(toY: 95)]),
+            ],
           ),
         ),
       ),
     );
   }
-
-  BarTouchData get barTouchData => BarTouchData(
-        enabled: false,
-        touchTooltipData: BarTouchTooltipData(
-          getTooltipColor: (group) => Colors.transparent,
-          tooltipPadding: EdgeInsets.zero,
-          tooltipMargin: 8,
-          getTooltipItem: (
-            BarChartGroupData group,
-            int groupIndex,
-            BarChartRodData rod,
-            int rodIndex,
-          ) {
-            return BarTooltipItem(
-              rod.toY.round().toString(),
-              const TextStyle(
-                color: 
-                Color.fromARGB(0, 0, 76, 255),
-                fontWeight: FontWeight.bold,
-              ),
-            );
-          },
-        ),
-      );
-
-  Widget getTitles(double value, TitleMeta meta) {
-    final style = TextStyle(
-      color:
-      Color.fromARGB(0, 0, 0, 0),
-      fontWeight: FontWeight.bold,
-      fontSize: 14,
-    );
-    String text;
-    switch (value.toInt()) {
-      case 0:
-        text = 'Mn';
-        break;
-      case 1:
-        text = 'Te';
-        break;
-      case 2:
-        text = 'Wd';
-        break;
-      case 3:
-        text = 'Tu';
-        break;
-      case 4:
-        text = 'Fr';
-        break;
-      case 5:
-        text = 'St';
-        break;
-      case 6:
-        text = 'Sn';
-        break;
-      default:
-        text = '';
-        break;
-    }
-    return SideTitleWidget(
-      axisSide: meta.axisSide,
-      space: 4,
-      child: Text(text, style: style),
-    );
-  }
-
-  FlTitlesData get titlesData => FlTitlesData(
-        show: true,
-        bottomTitles: AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: true,
-            reservedSize: 30,
-            getTitlesWidget: getTitles,
-          ),
-        ),
-        leftTitles: const AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
-        ),
-        topTitles: const AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
-        ),
-        rightTitles: const AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
-        ),
-      );
-
-  FlBorderData get borderData => FlBorderData(
-        show: false,
-      );
-
-  LinearGradient get _barsGradient => LinearGradient(
-        colors: [
-          Color.fromARGB(0, 0, 76, 255),
-          Color.fromARGB(0,0,0,0)
-        ],
-        begin: Alignment.bottomCenter,
-        end: Alignment.topCenter,
-      );
-
-  List<BarChartGroupData> get barGroups => [
-        BarChartGroupData(
-          x: 0,
-          barRods: [
-            BarChartRodData(
-              toY: 8,
-              gradient: _barsGradient,
-            )
-          ],
-          showingTooltipIndicators: [0],
-        ),
-        BarChartGroupData(
-          x: 1,
-          barRods: [
-            BarChartRodData(
-              toY: 10,
-              gradient: _barsGradient,
-            )
-          ],
-          showingTooltipIndicators: [0],
-        ),
-        BarChartGroupData(
-          x: 2,
-          barRods: [
-            BarChartRodData(
-              toY: 14,
-              gradient: _barsGradient,
-            )
-          ],
-          showingTooltipIndicators: [0],
-        ),
-        BarChartGroupData(
-          x: 3,
-          barRods: [
-            BarChartRodData(
-              toY: 15,
-              gradient: _barsGradient,
-            )
-          ],
-          showingTooltipIndicators: [0],
-        ),
-        BarChartGroupData(
-          x: 4,
-          barRods: [
-            BarChartRodData(
-              toY: 13,
-              gradient: _barsGradient,
-            )
-          ],
-          showingTooltipIndicators: [0],
-        ),
-        BarChartGroupData(
-          x: 5,
-          barRods: [
-            BarChartRodData(
-              toY: 10,
-              gradient: _barsGradient,
-            )
-          ],
-          showingTooltipIndicators: [0],
-        ),
-        BarChartGroupData(
-          x: 6,
-          barRods: [
-            BarChartRodData(
-              toY: 16,
-              gradient: _barsGradient,
-            )
-          ],
-          showingTooltipIndicators: [0],
-        ),
-      ];
 }
 
 class BarChartSample3 extends StatefulWidget {
@@ -207,9 +82,21 @@ class BarChartSample3 extends StatefulWidget {
 class BarChartSample3State extends State<BarChartSample3> {
   @override
   Widget build(BuildContext context) {
-    return const AspectRatio(
-      aspectRatio: 1.6,
-      child: _BarChart(),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: Text(
+          'Tabuľka výsledkov podľa odpovedí',
+          style: const TextStyle(
+              color: Color.fromARGB(255, 255, 255, 255),
+              fontStyle: FontStyle.italic,
+              fontWeight: FontWeight.bold),
+        ),
+      ),
+      body: const AspectRatio(
+        aspectRatio: 16 / 19,
+        child: _BarChart(),
+      ),
     );
   }
 }

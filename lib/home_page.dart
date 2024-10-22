@@ -100,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => FillFormThree(),
+                                  builder: (context) => BarChartSample3(),
                                 ),
                               );
                               break;

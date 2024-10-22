@@ -13,15 +13,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'M.A.S.S.',
       theme: ThemeData(
-          appBarTheme: AppBarTheme(
+          appBarTheme: const AppBarTheme(
             iconTheme: IconThemeData(
               color: Color.fromARGB(255, 255, 255, 255),
             ),
           ),
-          datePickerTheme: DatePickerThemeData(
+          datePickerTheme: const DatePickerThemeData(
             dividerColor: Colors.blue,
           )).copyWith(
-          colorScheme: ColorScheme.light(
+          colorScheme: const ColorScheme.light(
         primary: Colors.blue,
       )),
       home: const MyHomePage(title: 'M.A.S.S.'),
