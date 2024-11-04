@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:mass/graph.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:xml/xml.dart' as xml;
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -9,7 +10,6 @@ import 'home_page.dart';
 class FormBuilderPackage extends StatefulWidget {
   final String xmlFilePath;
   final String formTitle;
-  
 
   const FormBuilderPackage({
     super.key,
@@ -205,13 +205,13 @@ class _FormBuilderPackageState extends State<FormBuilderPackage> {
       // Zápis súboru
       await file.writeAsString(document.toXmlString(pretty: true));
 
-      print('Súbor uložený na: $filePath');
+      debugPrint('Súbor uložený na: $filePath');
 
       // Načítanie a zobrazenie obsahu súboru
       final savedData = await file.readAsString();
       _showFileContent(savedData);
     } else {
-      print('Nepodarilo sa získať adresár pre uloženie súboru.');
+      debugPrint('Nepodarilo sa získať adresár pre uloženie súboru.');
     }
   }
 
@@ -266,15 +266,12 @@ class _FormBuilderPackageState extends State<FormBuilderPackage> {
                       const SizedBox(height: 20),
                       ElevatedButton.icon(
                         onPressed: () {
-                          if (_formKey.currentState?.saveAndValidate() ??
-                              false) {
-                            setState(() {
-                              answers = _formKey.currentState?.value ?? {};
-                            });
-                            _saveForm();
-                          } else {
-                            print('Validation failed');
-                          }
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                     HorizontalBarChartWithLevels()),
+                          );
                         },
                         icon: const Icon(
                           Icons.send,

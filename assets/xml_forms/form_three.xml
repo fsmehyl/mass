@@ -1,75 +1,34 @@
 <form>
-    <question>
+        <question>
         <id>1</id>
-        <text>How would you rate the quality of our product?</text>
-        <type>rating</type>
-        <scale>1-5</scale>
+        <text>Do you have any experience with drugs/alcohol?</text>
+        <type>radio</type>
+        <options>
+            <option>Yes</option>
+            <option>No</option>
+            <option>I dont know</option>
+        </options>
     </question>
-    <question>
+
+        <question>
         <id>2</id>
-        <text>How satisfied are you with our customer service?</text>
-        <type>rating</type>
-        <scale>1-5</scale>
+        <text>Do you have any experience with school projects?</text>
+        <type>radio</type>
+        <options>
+            <option>Yes</option>
+            <option>No</option>
+            <option>I dont know</option>
+        </options>
     </question>
-    <question>
+
+        <question>
         <id>3</id>
-        <text>Would you recommend our product to others?</text>
+        <text>Do you have any experience with fighting in clubs?</text>
         <type>radio</type>
         <options>
             <option>Yes</option>
             <option>No</option>
+            <option>I dont know</option>
         </options>
-    </question>
-    <question>
-        <id>4</id>
-        <text>How did you first hear about our product?</text>
-        <type>select</type>
-        <options>
-            <option>Social Media</option>
-            <option>Friend/Family</option>
-            <option>Advertisement</option>
-            <option>Online Search</option>
-            <option>Other</option>
-        </options>
-    </question>
-    <question>
-        <id>5</id>
-        <text>How often do you use our product?</text>
-        <type>select</type>
-        <options>
-            <option>Daily</option>
-            <option>Weekly</option>
-            <option>Monthly</option>
-            <option>Rarely</option>
-        </options>
-    </question>
-    <question>
-        <id>6</id>
-        <text>What feature do you like the most?</text>
-        <type>textarea</type>
-    </question>
-    <question>
-        <id>7</id>
-        <text>What feature do you like the least?</text>
-        <type>textarea</type>
-    </question>
-    <question>
-        <id>8</id>
-        <text>Do you find our product easy to use?</text>
-        <type>radio</type>
-        <options>
-            <option>Yes</option>
-            <option>No</option>
-        </options>
-    </question>
-    <question>
-        <id>9</id>
-        <text>Have you experienced any issues with our product?</text>
-        <type>textarea</type>
-    </question>
-    <question>
-        <id>10</id>
-        <text>Any suggestions for improvement?</text>
-        <type>textarea</type>
     </question>
 </form>

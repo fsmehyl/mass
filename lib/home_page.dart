@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'fill_form_one.dart';
 import 'fill_form_two.dart';
 import 'fill_form_three.dart';
-import 'graph.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -100,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => BarChartSample3(),
+                                  builder: (context) => FillFormThree(),
                                 ),
                               );
                               break;
