@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, avoid_print
-
 import 'package:flutter/material.dart';
 import 'fill_form_one.dart';
 import 'fill_form_two.dart';
@@ -27,13 +25,49 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 4, 137, 166),
+      backgroundColor: const Color.fromARGB(255, 4, 137, 166),
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 155, 219, 233),
+        backgroundColor: const Color.fromARGB(255, 155, 219, 233),
         title: Text(
           widget.title,
-          style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+          style: const TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
         ),
+        actions: <Widget>[
+          IconButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    backgroundColor: const Color.fromARGB(255, 4, 137, 166),
+                    title: const Text('Informácie o aplikácií MASS',
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 255, 255, 255),
+                            fontWeight: FontWeight.bold)),
+                    content: const Text(
+                      'Multiplatformová aplikácia MASS alebo aj Multiplatformová aplikácia pre sociálne služby je môj návrh aplikácie vo vývojovom prostredí Flutter, ktorá je vytvorená za účelom bakalárskej práce a pomoci pri rýchlom diagnostickom testovaní pre sociálnych pracovníkov. Aplikácia obsahuje niekoľko typov rôznych XML formulárov, ktoré sú parsované aplikáciou a následne zobrazené na vyklikávanie odpovedí na rôznorodé otázky, po ich vyplnení sa používateľovi zobrazí graf predstavujúci mieru ohrozenia dieťaťa v jednotlivých kategóriach.',
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 255, 255, 255),
+                      ),
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        child: const Text('OK',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                fontWeight: FontWeight.bold)),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            icon: const Icon(Icons.info_outline),
+          ),
+        ],
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -41,11 +75,10 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.only(top: 30),
-                color: Color.fromARGB(255, 0, 74, 176),
-                child: Center(
+                padding: const EdgeInsets.only(top: 30),
+                child: const Center(
                   child: Text(
-                    'Vyberte formulár na vyplnenie:',
+                    'VYBERTE PROSÍM FORMULÁR',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -54,112 +87,68 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               ),
+              const Divider(
+                color: Colors.white,
+                thickness: 1,
+              ),
+              const SizedBox(height: 20),
+              ListView.separated(
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(
+                      loadFiles[index],
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    onTap: () {
+                      if (index == 0) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const FillFormOne(),
+                          ),
+                        );
+                      } else if (index == 1) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const FillFormTwo(),
+                          ),
+                        );
+                      } else if (index == 2) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const FillFormThree(),
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              backgroundColor: Colors.white,
+                              content: Text('Momentálne nedostupný...',
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 4, 137, 166),
+                                      fontWeight: FontWeight.bold))),
+                        );
+                      }
+                    },
+                  );
+                },
+                shrinkWrap: true,
+                separatorBuilder: (context, index) => const Divider(
+                  color: Colors.white,
+                  thickness: 1,
+                ),
+                itemCount: loadFiles.length,
+              ),
+              const SizedBox(height: 20),
               Container(
-                width: double.infinity,
-                height: 30,
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: const [
-                      Color.fromARGB(255, 0, 74, 176),
-                      Colors.red
-                    ], // Dve farby pre prechod
-                    begin: Alignment.topCenter, // Začiatok prechodu
-                    end: Alignment.bottomCenter, // Koniec prechodu
+                  borderRadius: const BorderRadius.all(Radius.circular(5)),
+                  border: Border.all(
+                    color: const Color.fromARGB(255, 155, 219, 233),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              for (var fileNames in loadFiles)
-                Column(
-                  children: [
-                    SizedBox(
-                      width: 500,
-                      child: ElevatedButton.icon(
-                        onPressed: () {
-                          switch (fileNames) {
-                            case 'Deti vychovávané v detskom domove':
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => FillFormOne(),
-                                ),
-                              );
-                              break;
-                            case 'Násilie páchané na deťoch v domácnostiach':
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => FillFormTwo(),
-                                ),
-                              );
-                              break;
-                            case 'Rôzne prípady detí DO 10 rokov':
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => FillFormThree(),
-                                ),
-                              );
-                              break;
-                            default:
-                              showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                  title: Text('Upozornenie'),
-                                  content: Text(
-                                      'Tento formulár zatiaľ ešte nie je dorobený, o jeho vytvorení vás budeme kontaktovať mailom, prosím zatiaľ používajte iné formuláre, ďakujeme'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Text('OK'),
-                                    ),
-                                  ],
-                                ),
-                              );
-                          }
-                        },
-                        icon: Icon(Icons.file_open_outlined,
-                            color: Color.fromARGB(255, 0, 118, 145)),
-                        label: Column(
-                          children: [
-                            Text(
-                              fileNames,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Color.fromARGB(255, 0, 118, 145),
-                              ),
-                            ),
-                            const SizedBox(height: 5),
-                            const Text(
-                              'Kliknite pre pokračovanie...',
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontStyle: FontStyle.italic,
-                                color: Color.fromARGB(255, 0, 118, 145),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                  ],
-                ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
-                    border: Border.all(
-                      color: Color.fromARGB(255, 155, 219, 233),
-                    )),
                 child: Column(
                   children: [
                     Image.asset(
@@ -167,10 +156,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       width: 350,
                       height: 350,
                     ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Text(
+                    const SizedBox(height: 20),
+                    const Text(
                       'Poháňané nástrojom Flutter',
                       style: TextStyle(
                         fontSize: 16,
@@ -181,35 +168,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                width: double.infinity,
-                height: 15,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: const [Colors.red, Color.fromARGB(255, 0, 74, 176)],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 20,
-                color: Color.fromARGB(255, 0, 74, 176),
-                child: Center(
-                  child: Text(
-                    'developer: Filip Šmehyl',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.normal,
-                      color: Color.fromARGB(255, 255, 255, 255),
-                    ),
-                  ),
-                ),
-              ),
+              const SizedBox(height: 20),
             ],
           ),
         ),

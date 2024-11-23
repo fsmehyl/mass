@@ -1,34 +1,61 @@
 <form>
-        <question>
+<question>
         <id>1</id>
-        <text>Do you have any experience with drugs/alcohol?</text>
-        <type>radio</type>
+        <text>What is your full name?</text>
+        <type>text</type>
+    </question>
+    <question>
+        <id>2</id>
+        <text>What is your date of birth?</text>
+        <type>date</type>
+    </question>
+    <question>
+        <id>3</id>
+        <text>What is your gender?</text>
+        <type>select</type>
         <options>
-            <option>Yes</option>
-            <option>No</option>
-            <option>I dont know</option>
+            <option>Male</option>
+            <option>Female</option>
         </options>
     </question>
-
-        <question>
-        <id>2</id>
+    <question>
+        <id>4</id>
+        <text>Was today a good day?</text>
+        <type>radio</type>
+        <options>
+            <option category1="SEX" weight1="0" category2="FYZ" weight2="0" category3="PSY" weight3="0" category4="ZAN" weight4="0">Yes</option>
+            <option category1="SEX" weight1="0" category2="FYZ" weight2="0" category3="PSY" weight3="0" category4="ZAN" weight4="0">No</option>
+            <option category1="SEX" weight1="0" category2="FYZ" weight2="0" category3="PSY" weight3="0" category4="ZAN" weight4="0">I don't know</option>
+        </options>
+    </question>
+    <question>
+        <id>5</id>
         <text>Do you have any experience with school projects?</text>
         <type>radio</type>
         <options>
-            <option>Yes</option>
-            <option>No</option>
-            <option>I dont know</option>
+            <option category1="SEX" weight1="2.88" category2="FYZ" weight2="2.88" category3="PSY" weight3="8.10">Yes</option>
+            <option category1="SEX" weight1="-1.11">No</option>
+            <option category4="ZAN" weight4="0">I don't know</option>
         </options>
     </question>
-
-        <question>
-        <id>3</id>
-        <text>Do you have any experience with fighting in clubs?</text>
+    <question>
+        <id>6</id>
+        <text>B</text>
         <type>radio</type>
         <options>
-            <option>Yes</option>
-            <option>No</option>
-            <option>I dont know</option>
+            <option category1="SEX" weight1="10.10" category4="ZAN" weight4="12">Yes</option>
+            <option category1="SEX" weight1="-1.11">No</option>
+            <option category4="SEX" weight4="0">I don't know</option>
+        </options>
+    </question>
+    <question>
+        <id>7</id>
+        <text>Do you have any experience with school projects?</text>
+        <type>radio</type>
+        <options>
+            <option category4="ZAN" weight4="22">Yes</option>
+            <option category4="ZAN" weight4="-23.33">No</option>
+            <option category4="ZAN" weight4="0">I don't know</option>
         </options>
     </question>
 </form>

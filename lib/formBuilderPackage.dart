@@ -1,11 +1,8 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:mass/graph.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:xml/xml.dart' as xml;
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'home_page.dart';
+import 'package:xml/xml.dart' as xml;
+import 'graph.dart';
 
 class FormBuilderPackage extends StatefulWidget {
   final String xmlFilePath;
@@ -43,15 +40,29 @@ class _FormBuilderPackageState extends State<FormBuilderPackage> {
       final id = questionNode.findElements('id').first.text;
       final text = questionNode.findElements('text').first.text;
       final type = questionNode.findElements('type').first.text;
-      List<String> options = [];
+      List<Map<String, dynamic>> options = [];
 
-      if (type == 'radio' || type == 'checkbox' || type == 'select') {
+      if (type == 'radio' || type == 'select') {
         options = questionNode
             .findElements('options')
             .first
             .findElements('option')
-            .map((optionNode) => optionNode.text)
-            .toList();
+            .map((optionNode) {
+          // Extract categories and weights
+          Map<String, double> categoryWeights = {};
+          for (int i = 1; i <= 4; i++) {
+            final category = optionNode.getAttribute('category$i');
+            final weight =
+                double.tryParse(optionNode.getAttribute('weight$i') ?? '0.0') ?? 0.0;
+            if (category != null && category.isNotEmpty) {
+              categoryWeights[category] = weight;
+            }
+          }
+          return {
+            'text': optionNode.text.trim(),
+            'categoryWeights': categoryWeights,
+          };
+        }).toList();
       }
 
       loadedQuestions.add({
@@ -72,173 +83,109 @@ class _FormBuilderPackageState extends State<FormBuilderPackage> {
       switch (question['type']) {
         case 'text':
           return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            padding: const EdgeInsets.symmetric(vertical: 12.0),
             child: FormBuilderTextField(
-              cursorColor: const Color.fromARGB(255, 18, 125, 240),
-              name: question['id'],
-              decoration: InputDecoration(
-                  labelText: question['text'],
-                  hoverColor: const Color.fromARGB(255, 18, 125, 240),
-                  border: const OutlineInputBorder(),
-                  contentPadding: const EdgeInsets.symmetric(
-                      vertical: 10.0, horizontal: 10.0),
-                  iconColor: Colors.blue),
-            ),
-          );
-        case 'radio':
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: FormBuilderChoiceChip<String>(
-              name: question['id'],
-              decoration: InputDecoration(labelText: question['text']),
-              options: question['options']
-                  .map<FormBuilderChipOption<String>>(
-                    (String option) => FormBuilderChipOption(
-                      value: option,
-                      child: Text(option),
-                    ),
-                  )
-                  .toList(),
-              selectedColor: const Color.fromARGB(255, 18, 125, 240),
-            ),
-          );
-        case 'checkbox':
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: FormBuilderFilterChip(
-              name: question['id'],
-              decoration: InputDecoration(labelText: question['text']),
-              options: question['options']
-                  .map<FormBuilderChipOption<String>>(
-                    (String option) => FormBuilderChipOption(
-                      value: option,
-                      child: Text(option),
-                    ),
-                  )
-                  .toList(),
-              selectedColor: const Color.fromARGB(255, 18, 125, 240),
-              checkmarkColor: const Color.fromARGB(255, 0, 0, 0),
-            ),
-          );
-        case 'select':
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: FormBuilderDropdown<String>(
               name: question['id'],
               decoration: InputDecoration(
                 labelText: question['text'],
-                border: const OutlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
               ),
-              items: question['options']
-                  .map<DropdownMenuItem<String>>((String option) =>
-                      DropdownMenuItem<String>(
-                          value: option, child: Text(option)))
-                  .toList(),
-            ),
-          );
-        case 'slider':
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: FormBuilderSlider(
-              name: question['id'],
-              decoration: InputDecoration(
-                labelText: question['text'],
-                labelStyle:
-                    const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-              ),
-              min: 1.0,
-              max: 5.0,
-              initialValue: 3.0,
-              divisions: 4,
-              activeColor: const Color.fromARGB(255, 18, 125, 240),
-              inactiveColor: const Color.fromARGB(255, 192, 192, 192),
             ),
           );
         case 'date':
           return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            padding: const EdgeInsets.symmetric(vertical: 12.0),
             child: FormBuilderDateTimePicker(
               name: question['id'],
               inputType: InputType.date,
               decoration: InputDecoration(
                 labelText: question['text'],
-                border: const OutlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
               ),
             ),
           );
+        case 'select':
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12.0),
+            child: FormBuilderDropdown<String>(
+              name: question['id'],
+              decoration: InputDecoration(
+                labelText: question['text'],
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+              ),
+              items: question['options']
+                  .map<DropdownMenuItem<String>>((option) =>
+                      DropdownMenuItem<String>(
+                          value: option['text'], child: Text(option['text'])))
+                  .toList(),
+            ),
+          );
+        case 'radio':
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12.0),
+            child: FormBuilderRadioGroup<String>(
+              name: question['id'],
+              decoration: InputDecoration(
+                labelText: question['text'],
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              options: question['options']
+                  .map<FormBuilderFieldOption<String>>(
+                    (option) => FormBuilderFieldOption<String>(
+                      value: option['text'],
+                      child: Text(option['text']),
+                    ),
+                  )
+                  .toList(),
+            ),
+          );
         default:
-          return const SizedBox
-              .shrink(); // Return an empty widget for unsupported types
+          return const SizedBox.shrink();
       }
     }).toList();
   }
 
-  Future<void> _saveForm() async {
-    final builder = xml.XmlBuilder();
-    builder.processing('xml', 'version="1.0" encoding="UTF-8"');
-    builder.element('form', nest: () {
-      for (var question in questions) {
-        builder.element('question', nest: () {
-          builder.element('id', nest: question['id']);
-          builder.element('answer', nest: answers[question['id']] ?? '');
-        });
-      }
-    });
+  void _calculateCategoryScores() {
+    // Initialize category scores
+    Map<String, double> categoryScores = {};
 
-    final document = builder.buildDocument();
+    for (var question in questions) {
+      final questionId = question['id'];
+      final selectedAnswer = _formKey.currentState?.fields[questionId]?.value;
 
-    Directory? directory;
-    if (Platform.isAndroid) {
-      directory = await getExternalStorageDirectory();
-    } else if (Platform.isIOS || Platform.isMacOS) {
-      directory = await getApplicationDocumentsDirectory();
-    } else if (Platform.isWindows || Platform.isLinux) {
-      directory = await getApplicationSupportDirectory();
-    } else {
-      directory = null;
-    }
-
-    if (directory != null) {
-      final filePath = '${directory.path}/form_data.xml';
-      final file = File(filePath);
-
-      // Zápis súboru
-      await file.writeAsString(document.toXmlString(pretty: true));
-
-      debugPrint('Súbor uložený na: $filePath');
-
-      // Načítanie a zobrazenie obsahu súboru
-      final savedData = await file.readAsString();
-      _showFileContent(savedData);
-    } else {
-      debugPrint('Nepodarilo sa získať adresár pre uloženie súboru.');
-    }
-  }
-
-  void _showFileContent(String content) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Obsah súboru'),
-          content: SingleChildScrollView(
-            child: Text(content),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(
-                    builder: (context) => const MyHomePage(title: 'M.A.S.S.'),
-                  ),
-                  (route) => false, // Odstráni všetky predchádzajúce stránky
-                );
-              },
-            ),
-          ],
+      if (selectedAnswer != null && selectedAnswer is String && selectedAnswer.isNotEmpty) {
+        final option = question['options'].firstWhere(
+          (opt) => opt['text'] == selectedAnswer,
+          orElse: () => <String, Object>{},
         );
-      },
+
+        if (option.isNotEmpty) {
+          final categoryWeights = option['categoryWeights'] as Map<String, double>;
+
+          categoryWeights.forEach((category, weight) {
+            categoryScores[category] = (categoryScores[category] ?? 0.0) + weight;
+          });
+        }
+      }
+    }
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => HorizontalBarChartWithLevels(
+          values: categoryScores.values.toList(),
+        ),
+      ),
     );
   }
 
@@ -246,12 +193,8 @@ class _FormBuilderPackageState extends State<FormBuilderPackage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: Text(widget.formTitle,
-            style: const TextStyle(
-                color: Color.fromARGB(255, 255, 255, 255),
-                fontStyle: FontStyle.italic,
-                fontWeight: FontWeight.bold)),
+        title: Text(widget.formTitle),
+        backgroundColor: Colors.blue
       ),
       body: questions.isEmpty
           ? const Center(child: CircularProgressIndicator())
@@ -261,33 +204,32 @@ class _FormBuilderPackageState extends State<FormBuilderPackage> {
                 child: FormBuilder(
                   key: _formKey,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ..._buildFormFields(),
                       const SizedBox(height: 20),
-                      ElevatedButton.icon(
+                      ElevatedButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                     HorizontalBarChartWithLevels()),
-                          );
+                          if (_formKey.currentState?.saveAndValidate() ?? false) {
+                            _calculateCategoryScores();
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Please complete the form.'),
+                              ),
+                            );
+                          }
                         },
-                        icon: const Icon(
-                          Icons.send,
-                          color: Color.fromARGB(255, 18, 125, 240),
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                         
                         ),
-                        label: const Column(
-                          children: [
-                            SizedBox(height: 5),
-                            Text(
-                              'Kliknite pre zber dát...',
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  fontStyle: FontStyle.italic,
-                                  color: Color.fromARGB(255, 18, 125, 240)),
-                            ),
-                          ],
+                        child: const Text(
+                          'Calculate Scores',
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],

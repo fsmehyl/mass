@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:mass/home_page.dart';
 
 class HorizontalBarChartWithLevels extends StatefulWidget {
-  const HorizontalBarChartWithLevels({super.key});
+  final List<double> values;
+
+  const HorizontalBarChartWithLevels({super.key, required this.values});
 
   @override
   State<HorizontalBarChartWithLevels> createState() =>
@@ -20,8 +22,6 @@ class _HorizontalBarChartWithLevelsState
     Colors.green,
     Colors.pink,
   ];
-
-  List<double> values = [38, -7, 21, -16];
 
   @override
   Widget build(BuildContext context) {
@@ -225,7 +225,7 @@ class _HorizontalBarChartWithLevelsState
                       );
                     },
                   ),
-                  barGroups: values.asMap().entries.map((entry) {
+                  barGroups: widget.values.asMap().entries.map((entry) {
                     int index = entry.key;
                     double value = entry.value;
                     return BarChartGroupData(
