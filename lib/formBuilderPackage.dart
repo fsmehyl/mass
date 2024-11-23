@@ -78,6 +78,18 @@ class _FormBuilderPackageState extends State<FormBuilderPackage> {
     });
   }
 
+  // Funkcia na zhromažďovanie odpovedí
+  void _collectAnswers() {
+    for (var question in questions) {
+      final questionId = question['id'];
+      final selectedAnswer = _formKey.currentState?.fields[questionId]?.value;
+
+      if (selectedAnswer != null) {
+        answers[questionId] = selectedAnswer;
+      }
+    }
+  }
+
   List<Widget> _buildFormFields() {
     return questions.map((question) {
       switch (question['type']) {
@@ -157,6 +169,8 @@ class _FormBuilderPackageState extends State<FormBuilderPackage> {
   }
 
   void _calculateCategoryScores() {
+    _collectAnswers(); // Gather answers before navigating
+
     // Initialize category scores
     Map<String, double> categoryScores = {};
 
@@ -180,10 +194,12 @@ class _FormBuilderPackageState extends State<FormBuilderPackage> {
       }
     }
 
+    // Passing answers to graph.dart and showing category scores
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => HorizontalBarChartWithLevels(
           values: categoryScores.values.toList(),
+          answers: answers, // Send answers to the graph page
         ),
       ),
     );
@@ -194,46 +210,63 @@ class _FormBuilderPackageState extends State<FormBuilderPackage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.formTitle),
-        backgroundColor: Colors.blue
+        backgroundColor: Colors.blue,
       ),
       body: questions.isEmpty
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: FormBuilder(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ..._buildFormFields(),
-                      const SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: () {
-                          if (_formKey.currentState?.saveAndValidate() ?? false) {
-                            _calculateCategoryScores();
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Please complete the form.'),
-                              ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Display collected answers above the form
+                    if (answers.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 20.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: answers.entries.map((entry) {
+                            return Text(
+                              '${entry.key}: ${entry.value}',
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                             );
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                         
-                        ),
-                        child: const Text(
-                          'Calculate Scores',
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          }).toList(),
                         ),
                       ),
-                    ],
-                  ),
+                    FormBuilder(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          ..._buildFormFields(),
+                          const SizedBox(height: 20),
+                          ElevatedButton(
+                            onPressed: () {
+                              if (_formKey.currentState?.saveAndValidate() ?? false) {
+                                _calculateCategoryScores();
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Please complete the form.'),
+                                  ),
+                                );
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                            ),
+                            child: const Text(
+                              'Calculate Scores',
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

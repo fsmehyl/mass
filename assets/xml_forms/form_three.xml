@@ -33,7 +33,7 @@
         <text>Do you have any experience with school projects?</text>
         <type>radio</type>
         <options>
-            <option category1="SEX" weight1="2.88" category2="FYZ" weight2="2.88" category3="PSY" weight3="8.10">Yes</option>
+            <option category1="SEX" weight1="2.88" category2="FYZ" weight2="2.88" category3="PSY" weight3="8.10" category4="ZAN" weight4="5.15">Yes</option>
             <option category1="SEX" weight1="-1.11">No</option>
             <option category4="ZAN" weight4="0">I don't know</option>
         </options>
@@ -54,7 +54,7 @@
         <type>radio</type>
         <options>
             <option category4="ZAN" weight4="22">Yes</option>
-            <option category4="ZAN" weight4="-23.33">No</option>
+            <option category1="SEX" weight1="-10" category2="FYZ" weight2="-20.50" category3="PSY" weight3="8.10" category4="ZAN" weight4="-23.33">No</option>
             <option category4="ZAN" weight4="0">I don't know</option>
         </options>
     </question>
