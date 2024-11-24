@@ -53,7 +53,8 @@ class _FormBuilderPackageState extends State<FormBuilderPackage> {
           for (int i = 1; i <= 4; i++) {
             final category = optionNode.getAttribute('category$i');
             final weight =
-                double.tryParse(optionNode.getAttribute('weight$i') ?? '0.0') ?? 0.0;
+                double.tryParse(optionNode.getAttribute('weight$i') ?? '0.0') ??
+                    0.0;
             if (category != null && category.isNotEmpty) {
               categoryWeights[category] = weight;
             }
@@ -103,7 +104,8 @@ class _FormBuilderPackageState extends State<FormBuilderPackage> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
               ),
             ),
           );
@@ -118,7 +120,8 @@ class _FormBuilderPackageState extends State<FormBuilderPackage> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
               ),
             ),
           );
@@ -132,7 +135,8 @@ class _FormBuilderPackageState extends State<FormBuilderPackage> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
               ),
               items: question['options']
                   .map<DropdownMenuItem<String>>((option) =>
@@ -178,17 +182,21 @@ class _FormBuilderPackageState extends State<FormBuilderPackage> {
       final questionId = question['id'];
       final selectedAnswer = _formKey.currentState?.fields[questionId]?.value;
 
-      if (selectedAnswer != null && selectedAnswer is String && selectedAnswer.isNotEmpty) {
+      if (selectedAnswer != null &&
+          selectedAnswer is String &&
+          selectedAnswer.isNotEmpty) {
         final option = question['options'].firstWhere(
           (opt) => opt['text'] == selectedAnswer,
           orElse: () => <String, Object>{},
         );
 
         if (option.isNotEmpty) {
-          final categoryWeights = option['categoryWeights'] as Map<String, double>;
+          final categoryWeights =
+              option['categoryWeights'] as Map<String, double>;
 
           categoryWeights.forEach((category, weight) {
-            categoryScores[category] = (categoryScores[category] ?? 0.0) + weight;
+            categoryScores[category] =
+                (categoryScores[category] ?? 0.0) + weight;
           });
         }
       }
@@ -209,7 +217,11 @@ class _FormBuilderPackageState extends State<FormBuilderPackage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.formTitle),
+        title: Text(
+          widget.formTitle,
+          style: TextStyle(
+              color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
+        ),
         backgroundColor: Colors.blue,
       ),
       body: questions.isEmpty
@@ -229,7 +241,8 @@ class _FormBuilderPackageState extends State<FormBuilderPackage> {
                           children: answers.entries.map((entry) {
                             return Text(
                               '${entry.key}: ${entry.value}',
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w500),
                             );
                           }).toList(),
                         ),
@@ -242,7 +255,8 @@ class _FormBuilderPackageState extends State<FormBuilderPackage> {
                           const SizedBox(height: 20),
                           ElevatedButton(
                             onPressed: () {
-                              if (_formKey.currentState?.saveAndValidate() ?? false) {
+                              if (_formKey.currentState?.saveAndValidate() ??
+                                  false) {
                                 _calculateCategoryScores();
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -253,14 +267,16 @@ class _FormBuilderPackageState extends State<FormBuilderPackage> {
                               }
                             },
                             style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 32.0, vertical: 16.0),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16),
                               ),
                             ),
                             child: const Text(
-                              'Calculate Scores',
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                              "Pozri výsledky",
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
                             ),
                           ),
                         ],

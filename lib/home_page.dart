@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'fill_form_one.dart';
 import 'fill_form_two.dart';
 import 'fill_form_three.dart';
+import 'rapid_info.dart';
+import 'vega_info.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -14,23 +16,60 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<String> loadFiles = [
-    'Deti vychovávané v detskom domove',
-    'Násilie páchané na deťoch v domácnostiach',
-    'Rôzne prípady detí DO 10 rokov',
-    'Rôzne prípady detí DO 5 rokov',
-    'Deti, ktoré pricestovali zo zahraničia',
+    'Pre deti od 2 do 6 rokov',
+    'Pre deti od 6,1 do 12 rokov',
+    'Pre deti od 12 rokov',
     'viac formulárov čoskoro...',
   ];
+
+  int tappedValue = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 4, 137, 166),
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 155, 219, 233),
-        title: Text(
-          widget.title,
-          style: const TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+        leading: PopupMenuButton(
+          icon: const Icon(Icons.menu),
+          itemBuilder: (context) => [
+            PopupMenuItem(
+              child: const Text('Informácie o RAPID_TEST_CAN'),
+              onTap: () {
+                Future.delayed(
+                  Duration.zero,
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const RapidTestInfoPage(),
+                    ),
+                  ),
+                );
+              },
+            ),
+            PopupMenuItem(
+              child: const Text('Informácie o VEGA_TEST'),
+              onTap: () {
+                Future.delayed(
+                  Duration.zero,
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const VegaTestInfoPage(),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+        backgroundColor: const Color.fromARGB(255, 124, 213, 233),
+        title: Center(
+          child: Text(
+            widget.title,
+            style: const TextStyle(
+                color: Color.fromARGB(255, 255, 255, 255),
+                fontWeight: FontWeight.bold),
+          ),
         ),
         actions: <Widget>[
           IconButton(
@@ -78,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: const EdgeInsets.only(top: 30),
                 child: const Center(
                   child: Text(
-                    'VYBERTE PROSÍM FORMULÁR',
+                    'RAPID_TEST_CAN',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -172,6 +211,27 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: const Color.fromARGB(255, 124, 213, 233),
+        selectedItemColor: const Color.fromARGB(255, 255, 255, 255),
+        unselectedItemColor: const Color.fromARGB(255, 123, 123, 123),
+        currentIndex: tappedValue,
+        onTap: (value) {
+          setState(() {
+            tappedValue = value;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.article_outlined),
+            label: 'RAPID_TEST_CAN',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.article),
+            label: 'VEGA_TEST',
+          ),
+        ],
       ),
     );
   }

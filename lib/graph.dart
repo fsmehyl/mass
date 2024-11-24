@@ -60,10 +60,12 @@ class _HorizontalBarChartWithLevelsState
                       style: TextStyle(
                         color: Color.fromARGB(255, 255, 255, 255),
                         fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                        fontSize: 22,
                       ),
                     ),
-                    const Divider(),
+                    const Divider(
+                      color: Colors.white,
+                    ),
                     // Zobrazenie odpovedí o používateľovi
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

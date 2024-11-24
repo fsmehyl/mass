@@ -1,61 +1,171 @@
 <form>
 <question>
         <id>1</id>
-        <text>What is your full name?</text>
+        <text>Ako sa voláš?</text>
         <type>text</type>
     </question>
     <question>
         <id>2</id>
-        <text>What is your date of birth?</text>
+        <text>Kedy si sa narodil?</text>
         <type>date</type>
     </question>
     <question>
         <id>3</id>
-        <text>What is your gender?</text>
+        <text>Aké je tvoje pohlavie?</text>
         <type>select</type>
         <options>
-            <option>Male</option>
-            <option>Female</option>
+            <option>Muž</option>
+            <option>Žena</option>
         </options>
     </question>
     <question>
         <id>4</id>
-        <text>Was today a good day?</text>
+        <text>Bol dnes zatiaľ dobrý deň?</text>
         <type>radio</type>
         <options>
-            <option category1="SEX" weight1="0" category2="FYZ" weight2="0" category3="PSY" weight3="0" category4="ZAN" weight4="0">Yes</option>
-            <option category1="SEX" weight1="0" category2="FYZ" weight2="0" category3="PSY" weight3="0" category4="ZAN" weight4="0">No</option>
-            <option category1="SEX" weight1="0" category2="FYZ" weight2="0" category3="PSY" weight3="0" category4="ZAN" weight4="0">I don't know</option>
+            <option category1="SEX" weight1="0" category2="FYZ" weight2="0" category3="PSY" weight3="0" category4="ZAN" weight4="0">Áno</option>
+            <option category1="SEX" weight1="0" category2="FYZ" weight2="0" category3="PSY" weight3="0" category4="ZAN" weight4="0">Nie</option>
+            <option category1="SEX" weight1="0" category2="FYZ" weight2="0" category3="PSY" weight3="0" category4="ZAN" weight4="0">Neviem</option>
         </options>
     </question>
     <question>
         <id>5</id>
-        <text>Do you have any experience with school projects?</text>
+        <text>Skúsenosti s užívaním drog, alkoholu?</text>
         <type>radio</type>
         <options>
-            <option category1="SEX" weight1="2.88" category2="FYZ" weight2="2.88" category3="PSY" weight3="8.10" category4="ZAN" weight4="5.15">Yes</option>
-            <option category1="SEX" weight1="-1.11">No</option>
-            <option category4="ZAN" weight4="0">I don't know</option>
+            <option category1="SEX" weight1="0.88" category2="FYZ" weight2="3.88" category3="PSY" weight3="5.10" category4="ZAN" weight4="5.15">Áno</option>
+            <option category1="SEX" weight1="-1.11">Nie</option>
+            <option>Neviem</option>
         </options>
     </question>
     <question>
         <id>6</id>
-        <text>B</text>
+        <text>Nepokoj a napätie v správaní sa dieťaťa?</text>
         <type>radio</type>
         <options>
-            <option category1="SEX" weight1="10.10" category4="ZAN" weight4="12">Yes</option>
-            <option category1="SEX" weight1="-1.11">No</option>
-            <option category4="SEX" weight4="0">I don't know</option>
+            <option category2="FYZ" weight2="2.02">Áno</option>
+            <option category2="FYZ" weight2="-1.11">Nie</option>
+            <option>Neviem</option>
         </options>
     </question>
     <question>
         <id>7</id>
-        <text>Do you have any experience with school projects?</text>
+        <text>Nechodí v škole na obedy?</text>
         <type>radio</type>
         <options>
-            <option category4="ZAN" weight4="22">Yes</option>
-            <option category1="SEX" weight1="-10" category2="FYZ" weight2="-20.50" category3="PSY" weight3="8.10" category4="ZAN" weight4="-23.33">No</option>
-            <option category4="ZAN" weight4="0">I don't know</option>
+            <option category4="ZAN" weight4="2.2">Áno</option>
+            <option category1="SEX" weight1="-1" category2="FYZ" weight2="-2.50" category3="PSY" weight3="-3.10" category4="ZAN" weight4="-3.33">Nie</option>
+            <option>Neviem</option>
+        </options>
+    </question>
+    <question>
+        <id>8</id>
+        <text>Bolesti brucha? Pocit na zvracanie?</text>
+        <type>radio</type>
+        <options>
+            <option category2="FYZ" weight2="3.13">Áno</option>
+            <option category1="SEX" weight1="-0.5" category2="FYZ" weight2="-1.72" category3="PSY" weight3="-2.10">Nie</option>
+            <option>Neviem</option>
+        </options>
+    </question>
+    <question>
+        <id>9</id>
+        <text>Číta si knihy/kreslí si obrázky s motívmi smrti/sexu?</text>
+        <type>radio</type>
+        <options>
+           <option category1="SEX" weight1="3.13" category3="PSY" weight3="2.10">Áno</option>
+            <option category1="SEX" weight1="-0.95" category3="PSY" weight3="-2.10">Nie</option>
+            <option>Neviem</option>
+        </options>
+    </question>
+    <question>
+        <id>10</id>
+        <text>Pocity hanby a viny? Negatívne vyjadrovanie o sebe?</text>
+        <type>radio</type>
+        <options>
+            <option category3="PSY" weight3="4.44">Áno</option>
+            <option category3="PSY" weight3="-5.00">Nie</option>
+            <option>Neviem</option>
+        </options>
+    </question>
+    <question>
+        <id>11</id>
+        <text>Únik do mysteriózného sveta?</text>
+        <type>radio</type>
+        <options>
+             <option category3="PSY" weight3="2.44">Áno</option>
+            <option category3="PSY" weight3="-2.00">Nie</option>
+            <option>Neviem</option>
+        </options>
+    </question>
+    <question>
+        <id>12</id>
+        <text>Úteky z domu?</text>
+        <type>radio</type>
+        <options>
+             <option category4="ZAN" weight4="6.07">Áno</option>
+            <option category4="ZAN" weight4="-4.14">Nie</option>
+            <option>Neviem</option>
+        </options>
+    </question>
+    <question>
+        <id>13</id>
+        <text>Dieťa nenavštebuje lekára?</text>
+        <type>radio</type>
+        <options>
+           <option category3="PSY" weight3="4.44">Áno</option>
+            <option category3="PSY" weight3="-5.00">Nie</option>
+            <option>Neviem</option>
+        </options>
+    </question>
+    <question>
+        <id>14</id>
+        <text>Nestabilita bývania?</text>
+        <type>radio</type>
+        <options>
+             <option category4="ZAN" weight4="1.99">Áno</option>
+            <option category4="ZAN" weight4="-1.18">Nie</option>
+            <option>Neviem</option>
+        </options>
+    </question>
+    <question>
+        <id>15</id>
+        <text>Náhradný/nevlastný rodič v rodine?</text>
+        <type>radio</type>
+        <options>
+            <option category4="ZAN" weight4="2.2">Áno</option>
+            <option category4="ZAN" weight4="-0.22">Nie</option>
+            <option>Neviem</option>
+        </options>
+    </question>
+    <question>
+        <id>16</id>
+        <text>Dieťa nemá vlastný priestor pre osobné veci?</text>
+        <type>radio</type>
+        <options>
+            <option category2="FYZ" weight2="3.99">Áno</option>
+            <option category2="FYZ" weight2="-3.18">Nie</option>
+            <option>Neviem</option>
+        </options>
+    </question>
+    <question>
+        <id>17</id>
+        <text>Rodina žijúca v chudobe?</text>
+        <type>radio</type>
+        <options>
+             <option category4="ZAN" weight4="1.99">Áno</option>
+            <option category4="ZAN" weight4="-1.18">Nie</option>
+            <option>Neviem</option>
+        </options>
+    </question>
+    <question>
+        <id>18</id>
+        <text>Nevlastný dospievajúci súrodenec?</text>
+        <type>radio</type>
+        <options>
+            <option category3="PSY" weight3="0.99">Áno</option>
+            <option category3="PSY" weight3="-0.18">Nie</option>
+            <option>Neviem</option>
         </options>
     </question>
 </form>
