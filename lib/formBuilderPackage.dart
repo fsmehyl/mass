@@ -105,7 +105,7 @@ class _FormBuilderPackageState extends State<FormBuilderPackage> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 contentPadding:
-                    EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
               ),
             ),
           );
@@ -121,7 +121,7 @@ class _FormBuilderPackageState extends State<FormBuilderPackage> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 contentPadding:
-                    EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
               ),
             ),
           );
@@ -136,7 +136,7 @@ class _FormBuilderPackageState extends State<FormBuilderPackage> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 contentPadding:
-                    EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
               ),
               items: question['options']
                   .map<DropdownMenuItem<String>>((option) =>
@@ -219,7 +219,7 @@ class _FormBuilderPackageState extends State<FormBuilderPackage> {
       appBar: AppBar(
         title: Text(
           widget.formTitle,
-          style: TextStyle(
+          style: const TextStyle(
               color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.blue,
@@ -241,7 +241,7 @@ class _FormBuilderPackageState extends State<FormBuilderPackage> {
                           children: answers.entries.map((entry) {
                             return Text(
                               '${entry.key}: ${entry.value}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.w500),
                             );
                           }).toList(),

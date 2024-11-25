@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class VegaTestInfoPage extends StatelessWidget {
-  const VegaTestInfoPage({Key? key}) : super(key: key);
+  const VegaTestInfoPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +14,12 @@ class VegaTestInfoPage extends StatelessWidget {
           style: TextStyle(color: Colors.white),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: const Padding(
+        padding: EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               Text(
                 'Vega TEST',
                 style: TextStyle(

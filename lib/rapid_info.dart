@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class RapidTestInfoPage extends StatelessWidget {
-  const RapidTestInfoPage({Key? key}) : super(key: key);
+  const RapidTestInfoPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +14,12 @@ class RapidTestInfoPage extends StatelessWidget {
           style: TextStyle(color: Colors.white),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: const Padding(
+        padding: EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               Text(
                 'Rapid TEST',
                 style: TextStyle(

@@ -9,7 +9,7 @@ class FormBuilder extends StatefulWidget {
   final String xmlFilePath;
   final String formTitle;
 
-  const FormBuilder({required this.xmlFilePath, required this.formTitle});
+  const FormBuilder({super.key, required this.xmlFilePath, required this.formTitle});
 
   @override
   _FormBuilderState createState() => _FormBuilderState();
@@ -113,7 +113,7 @@ class _FormBuilderState extends State<FormBuilder> {
               onPressed: () {
                 Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(
-                    builder: (context) => MyHomePage(title: 'M.A.S.S.'),
+                    builder: (context) => const MyHomePage(title: 'M.A.S.S.'),
                   ),
                   (route) => false, // Odstráni všetky predchádzajúce stránky
                 );
@@ -162,8 +162,8 @@ class _FormBuilderState extends State<FormBuilder> {
                     child: ElevatedButton.icon(
                       onPressed: _saveForm, // Save form data to XML
                       icon: const Icon(Icons.send),
-                      label: Column(
-                        children: const [
+                      label: const Column(
+                        children: [
                           SizedBox(height: 5),
                           Text(
                             'Kliknite pre zber dát...',

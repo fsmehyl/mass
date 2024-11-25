@@ -4,6 +4,8 @@ import 'fill_form_two.dart';
 import 'fill_form_three.dart';
 import 'rapid_info.dart';
 import 'vega_info.dart';
+import 'create_own_form.dart';
+import 'upload_own_form.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -33,6 +35,34 @@ class _MyHomePageState extends State<MyHomePage> {
           icon: const Icon(Icons.menu),
           itemBuilder: (context) => [
             PopupMenuItem(
+              child: const Text('Vytvoriť vlastný formulár (súbor XML)'),
+              onTap: () {
+                Future.delayed(
+                  Duration.zero,
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CreateFormPage(),
+                    ),
+                  ),
+                );
+              },
+            ),
+            PopupMenuItem(
+              child: const Text('Nahrať formulár (súbor XML)'),
+              onTap: () {
+                Future.delayed(
+                  Duration.zero,
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UploadAndGenerateFormPage(),
+                    ),
+                  ),
+                );
+              },
+            ),
+            PopupMenuItem(
               child: const Text('Informácie o RAPID_TEST_CAN'),
               onTap: () {
                 Future.delayed(
@@ -40,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const RapidTestInfoPage(),
+                      builder: (context) => RapidTestInfoPage(),
                     ),
                   ),
                 );

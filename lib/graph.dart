@@ -55,7 +55,7 @@ class _HorizontalBarChartWithLevelsState
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                    Text(
+                    const Text(
                       'VÝSLEDKY TESTU',
                       style: TextStyle(
                         color: Color.fromARGB(255, 255, 255, 255),
@@ -74,7 +74,7 @@ class _HorizontalBarChartWithLevelsState
                           padding: const EdgeInsets.symmetric(vertical: 4.0),
                           child: Text(
                             '${entry.key}: ${entry.value}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
